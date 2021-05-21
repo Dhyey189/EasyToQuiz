@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Quiz Created</title>
+        <link rel="shortcut icon" href="../static/Logo2.png" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-dark mynav"
+            style="background-color:#000511 !important; padding : 12px 10px;">
+
+            <a href="" style="text-decoration: none;"><h4>Easy To Quiz</h4></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+
+                        <p class="nav-link"><i class="fas fa-user"></i>&nbsp;{{user.username}}</p><span
+                            class="sr-only">(current)</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/EasyToQuiz/signout">
+                            <p><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</p>
+                        </a>
+                    </li>
+
+                </ul>
+                {% else%}
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/EasyToQuiz/login">
+                            <p style="color:white;margin:0 !important;">Login</p>
+                        </a><span class="sr-only">(current)</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/EasyToQuiz/userregistration">
+                            <p style="color:white;margin:0 !important;">Sign Up</p>
+                        </a>
+                    </li>
+                </ul>
+                {% endif%}
+            </div>
+        </nav>
+        <br>
+        <section class="mysection-response">
+        <form action="quiz" method="post"> {% csrf_token %}
+            <input type="text" class="display_none" name="quizcode" value={{QuizID}}>
+            <input type="text" class="display_none" name="user_id" value={{user.id}}>
+				<div class="container">
+					<div class="section quiz-question-title">
+                        <div class="item"><h1>Your Quiz ID is: <span id="QuizID" >{{QuizID}}</span><a id="copyButton" class="btnicon-5" ><i title="Copy Quiz ID" class="far fa-copy"></i></a></h1></div>
+                    <div class="item quiz-item">
+                            
+                            <input type="submit" class="btn" href="quiz" value="Set Answer">
+                            <a href="/EasyToQuiz/" class="btn">Back to home</a>
+
+                        </div>
+					</div>
+				</div>
+			</section>
+        </form>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script type = "text/javascript" >
+ function preventBack() { window.history.forward(); }
+setTimeout("preventBack()", 0);
+window.onunload = function () { null };
+document.getElementById("copyButton").addEventListener("click", function() {
+    copyid(document.getElementById("QuizID"));
+});
+function copyid(elem) {
+	  // create hidden text element, if it doesn't already exist
+    var targetId = "_hiddenCopyText_";
+    var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+    var origSelectionStart, origSelectionEnd;
+    if (isInput) {
+        // can just use the original source element for the selection and copy
+        target = elem;
+        origSelectionStart = elem.selectionStart;
+        origSelectionEnd = elem.selectionEnd;
+    } else {
+        // must use a temporary form element for the selection and copy
+        target = document.getElementById(targetId);
+        if (!target) {
+            var target = document.createElement("textarea");
+            target.style.position = "absolute";
+            target.style.left = "-9999px";
+            target.style.top = "0";
+            target.id = targetId;
+            document.body.appendChild(target);
+        }
+        target.textContent = elem.textContent;
+    }
+    // select the content
+    var currentFocus = document.activeElement;
+    target.focus();
+    target.setSelectionRange(0, target.value.length);
+    
+    // copy the selection
+    var succeed;
+    try {
+    	  succeed = document.execCommand("copy");
+    } catch(e) {
+        succeed = false;
+    }
+    // restore original focus
+    if (currentFocus && typeof currentFocus.focus === "function") {
+        currentFocus.focus();
+    }
+    
+    if (isInput) {
+        // restore prior selection
+        elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+    } else {
+        // clear temporary content
+        target.textContent = "";
+    }
+    return succeed;
+}
+</script>
+    </body>
+
+</html>

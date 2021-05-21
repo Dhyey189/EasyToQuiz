@@ -1,0 +1,7 @@
+<form name="myForm" id="myForm" method="post" action="responses_data" class="display_none">{% csrf_token %}
+<input type="hidden" name="quizcode" value={{quizcode}}>
+<input type="hidden" name="user_id" value={{userid}}>
+</form>
+<script>
+        document.getElementsByTagName('form')[0].submit()
+</script>

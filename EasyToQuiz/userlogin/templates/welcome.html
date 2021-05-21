@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Easy To Quiz</title>
+		<link rel="shortcut icon" href="../static/Logo2.png" />
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+			integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+		<link rel="stylesheet" href="{% static 'style.css' %}">
+	</head>
+
+	<body>{% csrf_token %}
+
+		<nav class="navbar navbar-expand-sm navbar-dark mynav"
+			style="background-color:#000511 !important; padding : 12px 10px">
+
+			<a href="/EasyToQuiz/" style="text-decoration: none;">
+				<div class="inline"><img src="../static/Logo2.png" alt="">
+					<h4>EasyToQuiz</h4>
+				</div>
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+				{% if user.is_authenticated %}
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+
+						<p class="nav-link"><i class="fas fa-user"></i>&nbsp;{{user.username}}</p><span
+							class="sr-only">(current)</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/EasyToQuiz/signout">
+							<p><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</p>
+						</a>
+					</li>
+
+				</ul>
+				{% else%}
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="/EasyToQuiz/login">
+							<p style="color:white;margin:0 !important;">Login</p>
+						</a><span class="sr-only">(current)</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/EasyToQuiz/userregistration">
+							<p style="color:white;margin:0 !important;">Sign Up</p>
+						</a>
+					</li>
+
+				</ul>
+				{% endif%}
+
+
+			</div>
+		</nav>
+
+		<div class="home">
+			<div class='row'>
+				<div class='quiz-create-sec col-md-6'>
+					<div class="middle">
+						<p class="f1">Create a Quiz with EasyToQuiz:<br>	
+						</p>
+						<div align=center>
+							{% if user.is_authenticated %}
+							<a class="btn" href='/EasyToQuiz/createquiz'>Create New Quiz</a>
+							{% else %}
+							<a class="btn" href='/EasyToQuiz/login'>Create New Quiz</a>
+
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				<div class='quiz-create-sec col-md-6 middle'>
+					<img src="../static/create_quiz.png" alt="">
+				</div>
+			</div>
+			<div class='row'>
+				<div class='quiz-create-sec col-md-6 middle'>
+					<img src="../static/give_quiz.png" alt="">
+				</div>
+				<div class='quiz-create-sec col-md-6'>
+					<div class="middle">
+						<p class="f1">Take your own Assessment:<br></p>
+						<div align=center>
+							{% if user.is_authenticated %}
+
+							<a class="btn" href='/EasyToQuiz/quizdata' align=center>Give Quiz</a>
+							{% else %}
+							<a class="btn" href='/EasyToQuiz/login' align=center>Give Quiz</a>
+
+							{% endif %}
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class='row'>
+				<div class='quiz-create-sec col-md-6'>
+					<div class="middle">
+						<p class="f1">See how people responding your quiz:<br></p>
+						<div align=center>
+							{% if user.is_authenticated %}
+							<a class="btn" href='/EasyToQuiz/responses'>Show Responses</a>
+							{% else %}
+							<a class="btn" href='/EasyToQuiz/login'>Show Responses</a>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				<div class='quiz-create-sec col-md-6 middle'>
+					<img src="../static/quiz_response.png" alt="">
+				</div>
+			</div>
+		</div>
+	</body>

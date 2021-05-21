@@ -1,0 +1,95 @@
+
+{% load static %}
+<html lang="en" dir="ltr">
+
+	<head>
+		<script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<meta charset="utf-8">
+		<title>Create New Quiz</title>
+		<link rel="shortcut icon" href="../static/Logo2.png" />
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+			integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+			<link rel="stylesheet" href="https://rawgit.com/lykmapipo/themify-icons/master/css/themify-icons.css">
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+		<link rel="stylesheet" href="{% static 'style.css' %}">
+	</head>
+
+	<body style="background-color:#ede7f6 !important;">
+
+		<nav class="navbar navbar-expand-sm navbar-dark mynav"
+			style="background-color:#000511 !important; padding : 12px 10px;">
+
+			<a href="/EasyToQuiz/createquiz" style="text-decoration: none;"><h4>New Quiz</h4></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+				{% if user.is_authenticated %}
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<p class="nav-link"><i class="fas fa-user"></i>&nbsp;{{user.username}}</p><span
+							class="sr-only">(current)</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/EasyToQuiz/signout">
+							<p><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</p>
+						</a>
+					</li>
+				</ul>
+				{% else%}
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="/EasyToQuiz/login">
+							<p style="color:white;margin:0 !important;">Login</p>
+						</a><span class="sr-only">(current)</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/EasyToQuiz/userregistration">
+							<p style="color:white;margin:0 !important;">Sign Up</p>
+						</a>
+					</li>
+				</ul>
+				{% endif%}
+			</div>
+		</nav>
+		<form action="savingquiz" method="POST" name="myForm" onsubmit="return final()">{% csrf_token %}
+		<input type="text" class="display_none" value={{user.email}} name="smail">
+		<input type="text" value={{user.id}} class="display_none" name="u_id">
+		<input type="text" id="xxx" class="display_none" name="x">
+		<input type="text" id="array2" class="display_none" name="array2">
+		<input type="text" id="array" class="display_none" name="array">
+		<div id="MAIN">
+		<section class="mysection">
+			<div class="container">
+				<div class="section">
+					
+					<div class="item">
+						<h2>Title:</h2>
+						<input type="text" name="title" align="left" required="required"/>
+					</div>
+					<div class="item">
+						<h2>Description:</h2>
+						<textarea name="description" rows="1" align="left" value=""></textarea>
+					</div>
+				</div>
+			</div>
+		</section>
+			
+		</div>	
+		{% with count=0 %}
+		<input type="submit" alt="submit" value="Save" title="Save" name="save" class="btn-2">
+			<a class="btnicon-2" onclick="AddQuestion()"  ><i class="fas fa-plus" title="Add Question"></i></a>
+			
+		</form>
+		{% endwith %}
+		<script type="text/javascript" src="../static/custom.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		{% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+            <strong>{{message}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {%endfor%}
+	</body>
+</html>

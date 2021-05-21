@@ -1,0 +1,170 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Easy To Quiz</title>
+		<link rel="shortcut icon" href="../static/Logo2.png" />
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+			integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+		<link rel="stylesheet" href="{% static 'style.css' %}">
+	</head>
+	<style>
+		.switch {
+		  position: relative;
+		  display: inline-block;
+		  width: 45px;
+		  height: 20px;
+		}
+		
+		.switch input { 
+		  opacity: 0;
+		  width: 0;
+		  height: 0;
+		}
+		
+		.slider {
+		  position: absolute;
+		  cursor: pointer;
+		  top: 0;
+		  left: 0;
+		  right: 0;
+		  bottom: 0;
+		  background-color: #ccc;
+		  -webkit-transition: .4s;
+		  transition: .4s;
+		}
+		
+		.slider:before {
+		  position: absolute;
+		  content: "";
+		  height: 12px;
+		  width: 12px;
+		  left: 4px;
+		  bottom: 4px;
+		  background-color: white;
+		  -webkit-transition: .4s;
+		  transition: .4s;
+		}
+		
+		input:checked + .slider {
+		  background-color: #2c2fff;
+		}
+		
+		input:focus + .slider {
+		  box-shadow: 0 0 1px #2c2fff;
+		}
+		
+		input:checked + .slider:before {
+		  -webkit-transform: translateX(26px);
+		  -ms-transform: translateX(26px);
+		  transform: translateX(26px);
+		}
+		
+		/* Rounded sliders */
+		.slider.round {
+		  border-radius: 20px;
+		}
+		
+		.slider.round:before {
+		  border-radius: 50%;
+		}
+		</style>
+	<body>{% csrf_token %}
+		<nav class="navbar navbar-expand-sm navbar-dark mynav"
+			style="background-color:#000511 !important; padding : 12px 10px">
+
+			<a href="/EasyToQuiz/" style="text-decoration: none;">
+				<div class="inline"><img src="../static/Logo2.png" alt="">
+					<h4>EasyToQuiz</h4>
+				</div>
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+				{% if user.is_authenticated %}
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+
+						<p class="nav-link"><i class="fas fa-user"></i>&nbsp;{{user.username}}</p><span
+							class="sr-only">(current)</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/EasyToQuiz/signout">
+							<p><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</p>
+						</a>
+					</li>
+
+				</ul>
+				{% else%}
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="/EasyToQuiz/login">
+							<p style="color:white;margin:0 !important;">Login</p>
+						</a><span class="sr-only">(current)</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/EasyToQuiz/userregistration">
+							<p style="color:white;margin:0 !important;">Sign Up</p>
+						</a>
+					</li>
+				</ul>
+				{% endif%}
+
+
+			</div>
+		</nav>
+        <section class="mysection-response-data">
+        
+				<div class="container">
+					<div class="section quiz-question-title">
+                        <h1>Click the name below to see Full response.</h1>
+					</div>
+				</div>
+                <form method="POST" action="view_response">{% csrf_token %}
+                <input type="hidden" value={{quizid}} name="quizid">
+				
+                {% for username in username_list%}
+                    <div class="section quiz-question-title-2">
+                    <input type="submit" value={{username}} class="btn" name="username">
+                    </div>
+                {%endfor%}
+				
+                </form>
+				<form action="change_data" method="post" id="change_data" align=right>{% csrf_token %}
+				<input type="hidden" value={{quizid}} name="quizid">
+				<input type="text" class="display_none" name="user_id" value={{user}}>
+				<div class=inline>
+					<div class=" item quiz-item">
+					
+						<h2>Response Status</h2>
+						
+					</div>
+					{%if rs%}
+					<label class="switch" title="Stop Responses">
+						<input type="checkbox" name="check" id="check" value="true" checked onchange="document.getElementById('change_data').submit()" >
+						<span class="slider round"></span>
+					</label>
+					{%else%}
+					<label class="switch" title="Start Responses">
+						<input type="checkbox" name="check" id="check" value="false" onchange="document.getElementById('change_data').submit()" >
+						<span class="slider round"></span>
+					</label>
+					{%endif%}
+					<input type="submit" class="display_none" name="checked">
+				</div>
+			</form>
+		</section>
+    </body>
+</html>
+<script>
+	function stop()
+	{
+		
+	}
+</script>

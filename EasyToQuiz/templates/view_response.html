@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="../static/Logo2.png" />
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+			integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+		<link rel="stylesheet" href="{% static 'style.css' %}">
+		<title>View Response</title>
+	</head>
+
+	<body> {% csrf_token %}
+
+		<nav class="navbar navbar-expand-sm navbar-dark mynav"
+			style="background-color:#000511 !important; padding : 12px 10px">
+
+			<a href="/EasyToQuiz/" style="text-decoration: none;">
+				<div class="inline"><img src="../static/Logo2.png" alt="">
+					<h4>EasyToQuiz</h4>
+				</div>
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+				{% if user.is_authenticated %}
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+
+						<p class="nav-link"><i class="fas fa-user"></i>&nbsp;{{user.username}}</p><span
+							class="sr-only">(current)</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/EasyToQuiz/signout">
+							<p><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</p>
+						</a>
+					</li>
+
+				</ul>
+				{% else%}
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="/EasyToQuiz/login">
+							<p style="color:white;margin:0 !important;">Login</p>
+						</a><span class="sr-only">(current)</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/EasyToQuiz/userregistration">
+							<p style="color:white;margin:0 !important;">Sign Up</p>
+						</a>
+					</li>
+
+				</ul>
+				{% endif%}
+			</div>
+		</nav>
+		{%if answered%}
+		<div id="MAIN">
+			<section class="mysection-quiz">
+				<div class="container">
+					<div class="section">
+						<div class=" item quiz-item">
+							<h1>{{quiz.quiztitle}}</h1>
+						</div>
+						<div class="item quiz-item">
+							<h3>Name : {{name}}</h3>
+							<h3>Email : {{email}}</h3>
+							<h3>Score : {{correct}}/{{total}}</h3>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		{% for question,answer,correct_answer in response_list %}
+		<div class="mysection2-quiz">
+			<div class="container">
+				<div class="section quiz-question-title">
+					<h1>{{question.qtitle}}</h1>
+				</div>
+				<div class="item-1 optionitem">
+					<div class="option-1">
+						Marked Answer: {{answer.option}}<br>
+						Correct Answer: {{correct_answer}}
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+		{%else%}
+		<div id="MAIN">
+			<section class="mysection-quiz">
+				<div class="container">
+					<div class="section">
+						<div class=" item quiz-item">
+							<h1>{{quiz.quiztitle}}</h1>
+						</div>
+						<div class="item quiz-item">
+							<h3>Name : {{name}}</h3>
+							<h3>Email : {{email}}</h3>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		{% for question,answer in response_list %}
+		<div class="mysection2-quiz">
+			<div class="container">
+				<div class="section quiz-question-title">
+					<h1>{{question.qtitle}}</h1>
+				</div>
+				<div class="item-1 optionitem">
+					<div class="option-1">
+						Marked Answer: {{answer.option}}<br>
+					</div>
+				</div>
+			</div>
+		</div>
+		{%endfor%}
+		{%endif%}
+	</body>
+
+</html>

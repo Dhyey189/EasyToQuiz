@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Quiz submited</title>
+        <link rel="shortcut icon" href="../static/Logo2.png" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+<body>
+<section class="mysection-response">
+				<div class="container">
+					<div class="section">
+						<div class=" item quiz-item">
+							<form action="responses_data" method="post" id="change_data">{% csrf_token %}
+                                <input type="text" class="display_none" value={{user.id}} name="user_id">
+                                <input type="text" class="display_none" value={{quizcode}} name="quizcode">
+                                {%if rs%}
+                                <label class="switch">
+                                    <input type="checkbox" checked onchange="document.getElementById('change_data').submit()">
+                                    <span class="slider round"></span>
+                                </label>
+                                {%else%}
+                                <label class="switch">
+                                    <input type="checkbox" onchange="document.getElementById('change_data').submit()">
+                                    <span class="slider round"></span>
+                                </label>
+                                {%endif%}
+                                <input type="submit" class="display_none" name="checked">
+                            </form>
+						</div>
+                        <div class="item quiz-item" align="center">
+                            <a href="/EasyToQuiz/" class="btn">Back to home</a>
+                        </div>
+					</div>
+				</div>
+			</section>
+</body>
+</html>
