@@ -6,7 +6,7 @@ This I had done as part of project and commited substantial ammount of work in g
 This project is at website:- https://easytoquiz.pythonanywhere.com/EasyToQuiz/
 
 
-#Features of EasyToQuiz
+##Features of EasyToQuiz
 
 Users can create their account by signup. 
 
